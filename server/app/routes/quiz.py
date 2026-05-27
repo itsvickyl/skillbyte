@@ -26,12 +26,17 @@ class QuizFinishRequest(BaseModel):
 async def get_exams():
     try:
         exams = await db_service.get_exams()
-        # Convert _id to string for JSON serialization
+        processed_exams = []
+        # Convert _id to string for JSON serialization without mutating original mock data
         for e in exams:
-            e["id"] = str(e["_id"])
-            if "_id" in e:
-                del e["_id"]
-        return exams
+            e_copy = dict(e)
+            if "_id" in e_copy:
+                e_copy["id"] = str(e_copy["_id"])
+                del e_copy["_id"]
+            elif "id" not in e_copy:
+                e_copy["id"] = None
+            processed_exams.append(e_copy)
+        return processed_exams
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -40,26 +45,38 @@ async def get_exams():
 async def get_subjects(examId: str):
     try:
         subjects = await db_service.get_subjects(examId)
+        processed_subjects = []
+        # Convert _id to string for JSON serialization without mutating original mock data
         for s in subjects:
-            s["id"] = str(s["_id"])
-            s["exam_id"] = str(s["exam_id"])
-            if "_id" in s:
-                del s["_id"]
-        return subjects
+            s_copy = dict(s)
+            if "_id" in s_copy:
+                s_copy["id"] = str(s_copy["_id"])
+                del s_copy["_id"]
+            elif "id" not in s_copy:
+                s_copy["id"] = None
+            s_copy["exam_id"] = str(s_copy.get("exam_id"))
+            processed_subjects.append(s_copy)
+        return processed_subjects
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# 3. GET /api/chapters/{subjectId}
+# 3. GET /api/chapters/{subjectId}")
 @router.get("/chapters/{subjectId}")
 async def get_chapters(subjectId: str):
     try:
         chapters = await db_service.get_chapters(subjectId)
+        processed_chapters = []
+        # Convert _id to string for JSON serialization without mutating original mock data
         for c in chapters:
-            c["id"] = str(c["_id"])
-            c["subject_id"] = str(c["subject_id"])
-            if "_id" in c:
-                del c["_id"]
-        return chapters
+            c_copy = dict(c)
+            if "_id" in c_copy:
+                c_copy["id"] = str(c_copy["_id"])
+                del c_copy["_id"]
+            elif "id" not in c_copy:
+                c_copy["id"] = None
+            c_copy["subject_id"] = str(c_copy.get("subject_id"))
+            processed_chapters.append(c_copy)
+        return processed_chapters
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

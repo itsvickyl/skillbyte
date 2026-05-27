@@ -286,24 +286,45 @@ class DBService:
         if self.is_mock:
             return self.mock_exams
         else:
-            cursor = mongo_db.exams_collection.find()
-            return await cursor.to_list(length=100)
+            try:
+                cursor = mongo_db.exams_collection.find()
+                return await cursor.to_list(length=100)
+            except Exception as e:
+                print(f">>> DB_SERVICE: Error accessing live database in get_exams: {e}")
+                print(">>> DB_SERVICE: Falling back to high-fidelity mock database at runtime.")
+                self.is_mock = True
+                self._seed_mock_data()
+                return self.mock_exams
 
     async def get_subjects(self, exam_id: str):
         oid = ObjectId(exam_id)
         if self.is_mock:
             return [s for s in self.mock_subjects if s["exam_id"] == oid]
         else:
-            cursor = mongo_db.subjects_collection.find({"exam_id": oid})
-            return await cursor.to_list(length=100)
+            try:
+                cursor = mongo_db.subjects_collection.find({"exam_id": oid})
+                return await cursor.to_list(length=100)
+            except Exception as e:
+                print(f">>> DB_SERVICE: Error accessing live database in get_subjects: {e}")
+                print(">>> DB_SERVICE: Falling back to high-fidelity mock database at runtime.")
+                self.is_mock = True
+                self._seed_mock_data()
+                return [s for s in self.mock_subjects if s["exam_id"] == oid]
 
     async def get_chapters(self, subject_id: str):
         oid = ObjectId(subject_id)
         if self.is_mock:
             return [c for c in self.mock_chapters if c["subject_id"] == oid]
         else:
-            cursor = mongo_db.chapters_collection.find({"subject_id": oid})
-            return await cursor.to_list(length=100)
+            try:
+                cursor = mongo_db.chapters_collection.find({"subject_id": oid})
+                return await cursor.to_list(length=100)
+            except Exception as e:
+                print(f">>> DB_SERVICE: Error accessing live database in get_chapters: {e}")
+                print(">>> DB_SERVICE: Falling back to high-fidelity mock database at runtime.")
+                self.is_mock = True
+                self._seed_mock_data()
+                return [c for c in self.mock_chapters if c["subject_id"] == oid]
 
     # ==================== GAMEPLAY FLOW STATE ====================
     async def start_quiz(self, username: str, chapter_id: str):

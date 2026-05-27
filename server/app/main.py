@@ -22,11 +22,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Enable CORS for frontend web application development
+# Enable CORS for frontend web application
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify frontend URL
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
