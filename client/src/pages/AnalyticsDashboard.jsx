@@ -84,7 +84,8 @@ export default function AnalyticsDashboard() {
     { label: 'Questions Served', value: questions_served, icon: HelpCircle, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
     { label: 'Questions Answered', value: questions_answered, icon: Percent, color: 'text-teal-600', bg: 'bg-teal-50 border-teal-100' },
     { label: 'Avg Answer Time', value: `${avg_response_time}s`, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
-    { label: 'Completion Rate', value: `${completion_rate}%`, icon: Hourglass, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' }
+    { label: 'Completion Rate', value: `${completion_rate}%`, icon: Hourglass, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+    { label: 'Avg Q/Session', value: avg_questions_per_session, icon: BarChart3, color: 'text-rose-600', bg: 'bg-rose-50 border-rose-100' }
   ];
 
   return (
