@@ -63,7 +63,9 @@
   background: rgba(233, 237, 239, 0.3);
 }
 
-/* Micro-animations for bubble transitions */
+/* ===== Micro-animations ===== */
+
+/* Chat bubble slide-up entrance */
 @keyframes slideUpIn {
   from {
     opacity: 0;
@@ -77,6 +79,86 @@
 
 .animate-bubble {
   animation: slideUpIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Fade-in for options panel */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Gentle pulse glow for selected state */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(18, 140, 126, 0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(18, 140, 126, 0); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Spinner */
+@keyframes spin-smooth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-smooth {
+  animation: spin-smooth 0.8s linear infinite;
+}
+
+/* Progress bar fill */
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+.animate-progress {
+  animation: progressFill 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger children animations */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+
+/* WhatsApp-style bubble tail */
+.bubble-tail-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 0;
+  border-color: transparent #ffffff transparent transparent;
+}
+
+.bubble-tail-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 8px 8px;
+  border-color: transparent transparent transparent #d9fdd3;
 }
 
 /* Custom Glassmorphism styles */
