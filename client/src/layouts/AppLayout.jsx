@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, BarChart3, GraduationCap, Menu, X, ChevronLeft, ChevronRight, User, Pencil, Check } from 'lucide-react';
+import { BookOpen, BarChart3, GraduationCap, Menu, X, ChevronLeft, ChevronRight, User, Pencil, Check, LogOut } from 'lucide-react';
 
 export default function AppLayout({ children }) {
   const location = useLocation();
@@ -43,6 +43,12 @@ export default function AppLayout({ children }) {
       localStorage.setItem('quiz_username', trimmed);
     }
     setIsEditing(false);
+  };
+
+  const handleLogout = () => {
+    setUsername('');
+    setIsEditing(false);
+    localStorage.removeItem('quiz_username');
   };
 
   const getInitials = (name) => {
@@ -134,13 +140,22 @@ export default function AppLayout({ children }) {
                   </p>
                 </div>
                 {username && (
-                  <button
-                    onClick={() => { setEditValue(username); setIsEditing(true); }}
-                    className="p-1.5 rounded-lg text-slate-300 hover:text-slate-600 hover:bg-slate-100 transition-all shrink-0"
-                    title="Edit name"
-                  >
-                    <Pencil className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-0.5 shrink-0">
+                    <button
+                      onClick={() => { setEditValue(username); setIsEditing(true); }}
+                      className="p-1.5 rounded-lg text-slate-300 hover:text-slate-600 hover:bg-slate-100 transition-all"
+                      title="Edit name"
+                    >
+                      <Pencil className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="p-1.5 rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 transition-all"
+                      title="Logout"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 )}
               </div>
             )}
@@ -211,6 +226,18 @@ export default function AppLayout({ children }) {
                 );
               })}
             </div>
+            {/* Mobile logout */}
+            {username && (
+              <div className="p-4 border-t border-slate-100">
+                <button
+                  onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-rose-500 hover:bg-rose-50 transition-all"
+                >
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
