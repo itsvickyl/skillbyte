@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+/* Custom theme tokens (migrated from tailwind.config.js) */
+@theme {
+  --color-whatsapp-green: #25D366;
+  --color-whatsapp-darkGreen: #075E54;
+  --color-whatsapp-teal: #128C7E;
+  --color-whatsapp-blue: #34B7F1;
+  --color-whatsapp-bg: #f0f2f5;
+  --color-whatsapp-chatBg: #efeae2;
+  --color-whatsapp-bubbleSelf: #d9fdd3;
+  --color-whatsapp-bubbleOther: #ffffff;
+  --color-whatsapp-panelBg: #f0f2f5;
+  --color-whatsapp-textPrimary: #111b21;
+  --color-whatsapp-textSecondary: #667781;
+
+  /* Dark Mode Hues */
+  --color-whatsapp-darkBg: #0c1317;
+  --color-whatsapp-darkChatBg: #0b141a;
+  --color-whatsapp-darkPanelBg: #202c33;
+  --color-whatsapp-darkBubbleSelf: #005c4b;
+  --color-whatsapp-darkBubbleOther: #202c33;
+  --color-whatsapp-darkTextPrimary: #e9edef;
+  --color-whatsapp-darkTextSecondary: #8696a0;
+
+  --background-image-whatsapp-pattern: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply bg-slate-50 text-slate-900 antialiased overflow-x-hidden;
+  }
+}
+
+/* Custom WhatsApp style scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(11, 20, 26, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(11, 20, 26, 0.4);
+}
+
+/* Dark Mode Scrollbars */
+.dark-scroll::-webkit-scrollbar-thumb {
+  background: rgba(233, 237, 239, 0.15);
+}
+
+.dark-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(233, 237, 239, 0.3);
+}
+
+/* Micro-animations for bubble transitions */
+@keyframes slideUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bubble {
+  animation: slideUpIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Glassmorphism styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dark .glass-panel {
+  background: rgba(32, 44, 51, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
