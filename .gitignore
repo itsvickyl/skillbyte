@@ -40,3 +40,8 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 *.local
+
+# Video/recordings
+*.mp4
+*.mov
+*.avi
